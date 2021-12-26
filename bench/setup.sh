@@ -2,8 +2,7 @@
 
 # install all commands needed
 apt update
-apt install -y git sysbench apache2-utils mysql-client-core-8.0 redis
-
+apt install -y git sysbench apache2-utils mysql-client-core-8.0 redis redis-tools
 
 # install docker and docker-compose
 curl -fsSL https://get.docker.com -o get-docker.sh
