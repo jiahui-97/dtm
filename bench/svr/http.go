@@ -9,6 +9,7 @@ package svr
 import (
 	"database/sql"
 	"fmt"
+	"os"
 	"strings"
 	"sync/atomic"
 	"time"
@@ -27,10 +28,10 @@ import (
 
 // service address of the transcation
 const benchAPI = "/api/busi_bench"
-const benchPort = 8083
 const total = 200000
 
-var benchBusi = fmt.Sprintf("http://localhost:%d%s", benchPort, benchAPI)
+var benchPort = dtmimp.If(os.Getenv("BENCH_PORT") == "", os.Getenv("BENCH_PORT"), "8083").(string)
+var benchBusi = fmt.Sprintf("http://localhost:%s%s", benchPort, benchAPI)
 
 func sdbGet() *sql.DB {
 	db, err := dtmimp.PooledDB(common.Config.ExamplesDB)
@@ -177,6 +178,7 @@ func benchAddRoute(app *gin.Engine) {
 		saga := dtmcli.NewSaga(examples.DtmHttpServer, gid).
 			Add("", "", req).
 			Add("", "", req)
+		saga.WaitResult = true
 		err := saga.Submit()
 		return nil, err
 	}))
