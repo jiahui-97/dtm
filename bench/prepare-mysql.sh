@@ -1,5 +1,5 @@
 # !/bin/bash
-curl https://github.com/dtm-labs/dtm/tree/main/bench/setup.sh -o setup.sh
+curl https://raw.githubusercontent.com/dtm-labs/dtm/alpha/bench/setup.sh -o setup.sh
 sh setup.sh
 
 docker-compose -f helper/compose.mysql.yml up -d
