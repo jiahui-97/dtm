@@ -94,7 +94,7 @@ func StartSvr() {
 	app := common.GetGinApp()
 	benchAddRoute(app)
 	logger.Debugf("bench listening at %d", benchPort)
-	go app.Run(fmt.Sprintf(":%d", benchPort))
+	go app.Run(fmt.Sprintf(":%s", benchPort))
 }
 
 func qsAdjustBalance(uid int, amount int, c *gin.Context) (interface{}, error) {
