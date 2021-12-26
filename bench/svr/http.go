@@ -68,12 +68,7 @@ var uidCounter int32 = 0
 var mode string = ""
 var sqls int = 1
 
-// StartSvr 1
-func StartSvr() {
-	app := common.GetGinApp()
-	benchAddRoute(app)
-	logger.Debugf("bench listening at %d", benchPort)
-	go app.Run(fmt.Sprintf(":%d", benchPort))
+func PrepareBenchDB() {
 	db := sdbGet()
 	_, err := dtmimp.DBExec(db, "drop table if exists dtm_busi.user_account_log")
 	logger.FatalIfError(err)
@@ -92,6 +87,14 @@ func StartSvr() {
 )
 `)
 	logger.FatalIfError(err)
+}
+
+// StartSvr 1
+func StartSvr() {
+	app := common.GetGinApp()
+	benchAddRoute(app)
+	logger.Debugf("bench listening at %d", benchPort)
+	go app.Run(fmt.Sprintf(":%d", benchPort))
 }
 
 func qsAdjustBalance(uid int, amount int, c *gin.Context) (interface{}, error) {

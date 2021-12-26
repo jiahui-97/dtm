@@ -1,7 +1,7 @@
 # !/bin/bash
 apt update
 apt install -y git
-git clone https://github.com/dtm-labs/dtm.git && cd dtm && git checkout alpha && bench/setup.sh
+git clone https://github.com/dtm-labs/dtm.git && cd dtm && git checkout alpha && cd bench && make || exit 1
 
 
 echo 'all prepared. you shoud run following commands to test in different terminal'

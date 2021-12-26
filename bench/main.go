@@ -36,6 +36,7 @@ func main() {
 	logger.InitLog(conf.LogLevel)
 	if conf.ExamplesDB.Driver != "" {
 		dtmcli.SetCurrentDBType(conf.ExamplesDB.Driver)
+		svr.PrepareBenchDB()
 	}
 	registry.WaitStoreUp()
 	dtmsvr.PopulateDB(false)
