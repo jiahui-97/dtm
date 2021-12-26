@@ -2,7 +2,7 @@
 default: bench
 
 bench: /usr/local/bin/go /etc/redis/redis.conf /usr/local/bin/docker-compose main.go
-  rm -f ../conf.sample.yml
+	rm -f ../conf.sample.yml
 	go build -o bench
 
 go: /usr/local/bin/go

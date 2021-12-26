@@ -25,7 +25,7 @@ func hintAndExit() {
 	os.Exit(0)
 }
 
-var conf = common.Config
+var conf = &common.Config
 
 func main() {
 	if len(os.Args) <= 1 {
