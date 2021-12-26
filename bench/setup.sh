@@ -15,4 +15,4 @@ chmod +x /usr/local/bin/docker-compose
 wget https://golang.org/dl/go1.17.1.linux-amd64.tar.gz
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.1.linux-amd64.tar.gz && cp -f /usr/local/go/bin/go /usr/local/bin/go
 
-git clone https://github.com/dtm-labs/dtm.git && git checkout v1.7.5
+git clone https://github.com/dtm-labs/dtm.git && git checkout alpha
