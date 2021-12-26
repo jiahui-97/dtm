@@ -19,7 +19,6 @@ import (
 	"github.com/dtm-labs/dtm/dtmcli/dtmimp"
 	"github.com/dtm-labs/dtm/dtmcli/logger"
 	"github.com/dtm-labs/dtm/dtmsvr"
-	"github.com/dtm-labs/dtm/examples"
 	"github.com/gin-gonic/gin"
 	"github.com/lithammer/shortuuid"
 )
@@ -128,6 +127,7 @@ func qsAdjustBalance(uid int, amount int, c *gin.Context) (interface{}, error) {
 }
 
 func benchAddRoute(app *gin.Engine) {
+	dtmHttpServer := fmt.Sprintf("localhost:%d", common.Config.HttpPort)
 	app.POST(benchAPI+"/TransIn", common.WrapHandler(func(c *gin.Context) (interface{}, error) {
 		return qsAdjustBalance(dtmimp.MustAtoi(c.Query("uid")), 1, c)
 	}))
@@ -158,7 +158,7 @@ func benchAddRoute(app *gin.Engine) {
 		params2 := fmt.Sprintf("?uid=%s", suid2)
 		logger.Debugf("mode: %s contains dtm: %t", mode, strings.Contains(mode, "dtm"))
 		if strings.Contains(mode, "dtm") {
-			saga := dtmcli.NewSaga(examples.DtmHttpServer, fmt.Sprintf("bench-%d", uid)).
+			saga := dtmcli.NewSaga(dtmHttpServer, fmt.Sprintf("bench-%d", uid)).
 				Add(benchBusi+"/TransOut"+params, benchBusi+"/TransOutCompensate"+params, req).
 				Add(benchBusi+"/TransIn"+params2, benchBusi+"/TransInCompensate"+params2, req)
 			saga.WaitResult = true
@@ -175,7 +175,7 @@ func benchAddRoute(app *gin.Engine) {
 	app.Any(benchAPI+"/benchEmptyUrl", common.WrapHandler(func(c *gin.Context) (interface{}, error) {
 		gid := shortuuid.New()
 		req := gin.H{}
-		saga := dtmcli.NewSaga(examples.DtmHttpServer, gid).
+		saga := dtmcli.NewSaga(dtmHttpServer, gid).
 			Add("", "", req).
 			Add("", "", req)
 		saga.WaitResult = true
