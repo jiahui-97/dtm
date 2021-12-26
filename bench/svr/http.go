@@ -29,7 +29,7 @@ import (
 const benchAPI = "/api/busi_bench"
 const total = 200000
 
-var benchPort = dtmimp.If(os.Getenv("BENCH_PORT") == "", os.Getenv("BENCH_PORT"), "8083").(string)
+var benchPort = dtmimp.If(os.Getenv("BENCH_PORT") == "", "8083", os.Getenv("BENCH_PORT")).(string)
 var benchBusi = fmt.Sprintf("http://localhost:%s%s", benchPort, benchAPI)
 
 func sdbGet() *sql.DB {
